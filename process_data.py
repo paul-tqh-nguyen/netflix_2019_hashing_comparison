@@ -81,9 +81,12 @@ class TensorMap():
         if isinstance(item, np.ndarray):
             item = TensorMap(item, self.position_to_id_map, self.id_to_position_map)
         return item
-
+    
     def __iter__(self):
         yield from self.position_to_id_map
+    
+    def keys(self):
+        return self.position_to_id_map
     
     def todict(self):
         result_dict = {}
@@ -94,6 +97,10 @@ class TensorMap():
             result_dict[key] = value
         return result_dict
 
+def kevin_bacon_distances_from_tensor_map(tensor_map: TensorMap) -> dict:
+    assert len(tensor_map.tensor.shape) == 2
+    return TensorMap(tensor_map.tensor.max(axis=1), tensor_map.position_to_id_map, tensor_map.id_to_position_map).todict()
+    
 def apsp_via_scipy(graph: nx.Graph) -> Tuple[TensorMap, float]:
     total_time_container = {}
     with timer(exitCallback=lambda time: operator.setitem(total_time_container,'total_time', time)):
@@ -154,18 +161,18 @@ def process_data() -> None:
     nx_apsp_dist_map, nx_apsp_time = apsp_via_nx(actor_to_actor_graph)
     print(f'APSP via NetworkX took {nx_apsp_time} seconds.')
     _sanity_check_apsp_results(scipy_apsp_dist_map, nx_apsp_dist_map)
-    path_data = generate_path_data_for_visualization(actor_to_actor_graph)
     print('Saving results.')
     output_dict = {
-        'scipy_apsp_dist_map': scipy_apsp_dist_map.todict(),
         'scipy_apsp_time': scipy_apsp_time,
-        'nx_apsp_dist_map': nx_apsp_dist_map,
         'nx_apsp_time': nx_apsp_time,
-        'path_data': path_data,
+        'kevin_bacon_distances': kevin_bacon_distances_from_tensor_map(scipy_apsp_dist_map),
+        'min_kevin_bacon_distance': min(kevin_bacon_dist_dict.values()),
+        'path_data': generate_path_data_for_visualization(actor_to_actor_graph),
     }
     with open(OUTPUT_JSON_FILE_LOCATION, 'w') as file_handle:
         json.dump(output_dict, file_handle, indent=4)
     print('Done.')
+    breakpoint()
     return
 
 if __name__ == '__main__':
