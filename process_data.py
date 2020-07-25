@@ -161,18 +161,20 @@ def process_data() -> None:
     nx_apsp_dist_map, nx_apsp_time = apsp_via_nx(actor_to_actor_graph)
     print(f'APSP via NetworkX took {nx_apsp_time} seconds.')
     _sanity_check_apsp_results(scipy_apsp_dist_map, nx_apsp_dist_map)
+    path_data = generate_path_data_for_visualization(actor_to_actor_graph)
+    kevin_bacon_dist_dict = kevin_bacon_distances_from_tensor_map(scipy_apsp_dist_map)
+    min_kevin_bacon_distance = min(kevin_bacon_dist_dict.values())
     print('Saving results.')
     output_dict = {
         'scipy_apsp_time': scipy_apsp_time,
         'nx_apsp_time': nx_apsp_time,
-        'kevin_bacon_distances': kevin_bacon_distances_from_tensor_map(scipy_apsp_dist_map),
-        'min_kevin_bacon_distance': min(kevin_bacon_dist_dict.values()),
-        'path_data': generate_path_data_for_visualization(actor_to_actor_graph),
+        'kevin_bacon_distances': kevin_bacon_dist_dict,
+        'min_kevin_bacon_distance': min_kevin_bacon_distance,
+        'path_data': path_data,
     }
     with open(OUTPUT_JSON_FILE_LOCATION, 'w') as file_handle:
         json.dump(output_dict, file_handle, indent=4)
     print('Done.')
-    breakpoint()
     return
 
 if __name__ == '__main__':

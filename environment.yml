@@ -6,3 +6,9 @@ dependencies:
   - scipy
   - numpy
   - tqdm
+
+  
+  # the below are temporary
+  - pip
+  - pip:
+    - tinycss2
