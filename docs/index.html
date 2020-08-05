@@ -3,6 +3,8 @@
   <head>
     <link type="text/css" media="screen" href="index.css" rel="stylesheet">
     <title>Hashing Is Not A Silver Bullet</title>
+    <script src="visualization.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
   </head>
   <body class="home mega-menu-menu-2 mega-menu-menu-1">
     <div id="header-row">
@@ -23,13 +25,19 @@
       <p>A case study in how satisfaction with O(1) performance can be insufficient.</p>
     </section>
     
-    
-    
-    
-    
     <section class="main-section">
-      <h3>title</h3>
-      <p>text text text text text text text text text text text text text text text text text text text text text text text text text text text </p>
+      <h3>Introduction</h3>
+      <p>Text text text text text text text text text text text text text text text text text text text text text text text text text text text</p>
+      <div id="visualization-section">
+	<h3>Netflix 2019 Actor Collaboration 20-Core Visualization</h3>
+	<div id="svg-container">
+	  <svg id="graph-svg"></svg>
+	</div>
+	<p id="scipy-apsp-time"></p>
+	<p id="nx-apsp-time"></p>
+	<p id="min-kevin-bacon-distance"></p>
+	<script>runVisualization()</script>
+      </div>
     </section>
     
     <section class="main-section bg-light lg code-test-side-a row-width-default flexible-content-section-26">
@@ -41,27 +49,29 @@
 
 
     <section class="main-section">
-      <h3>title</h3>
-      <p>text</p>
+      <h3>Title</h3>
+      <p>Text text text text text text text text text text text text text</p>
     </section>
     
-    <section id="news_events" class="lg bg-dark boxes-4up utility-collapse">
+    <section class="lg bg-dark boxes-4up">
       <div class="row full-width">
         <div class="feature-box column medium-6">
           <div class="feature-box_inner">
             <h2 style="color: #FEFEFE">Left Section</h2>
-            <div class="news-list">
-              <div class="news-item">
-                <a href="">
-                  <div class="byline">somethign</div>
-                  <h4 class="news-title">title</h4>
-                </a>
-              </div>
-              <div class="news-item">
-                <a href="">
-                  <div class="byline">vvvdsa</div>
-                  <h4 class="news-title">somethign</h4>
-                </a>
+            <div class="panel-recent-events">
+              <div class="events">
+                <div class="event-item undefined">
+                  <a href="">
+                    <h4 class="event-title">regfvr</h4>
+                    <div class="description">gtrg5gt</div>
+                  </a>
+                </div>
+                <div class="event-item undefined">
+                  <a href="">
+                    <h4 class="event-title">0koinj nji</h4>
+                    <div class="description">t8ghdfkmowl3ri</div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -70,17 +80,15 @@
           <div class="feature-box_inner">
             <h2 style="color: #FEFEFE">Right Section</h2>
             <div class="panel-recent-events">
-              <div class="js-events-home events">
+              <div class="events">
                 <div class="event-item undefined">
                   <a href="">
-                    <div class="date">asdsdas</div>
                     <h4 class="event-title">regfvr</h4>
                     <div class="description">gtrg5gt</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
                   <a href="">
-                    <div class="date">t5grgko</div>
                     <h4 class="event-title">0koinj nji</h4>
                     <div class="description">t8ghdfkmowl3ri</div>
                   </a>

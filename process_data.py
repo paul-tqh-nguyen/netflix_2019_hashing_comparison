@@ -31,7 +31,7 @@ NETFLIX_CSV_FILE_LOCATION = './data/netflix_titles.csv'
 
 OUTPUT_JSON_FILE_LOCATION = './docs/processed_data.json'
 
-K_CORE_VALUE_FOR_VISUALZIATION = 20
+K_CORE_VALUE_FOR_VISUALZIATION = 30
 
 ##################################################
 # Application Specific Data Processing Utilities #
@@ -126,10 +126,11 @@ def apsp_via_nx(graph: nx.Graph) -> Tuple[dict, float]:
 # Path Data for Visualization Utilities #
 #########################################
 
-def generate_path_data_for_visualization(actor_to_actor_graph: nx.Graph) -> dict:
+def generate_path_data_for_visualization(actor_to_actor_graph: nx.Graph) -> Tuple[dict, dict]:
     actor_to_actor_graph = nx.k_core(actor_to_actor_graph, K_CORE_VALUE_FOR_VISUALZIATION)
+    graph_data = nx.readwrite.json_graph.node_link_data(actor_to_actor_graph, {'source': 'source', 'target': 'target'})
     path_data = dict(nx.all_pairs_shortest_path(actor_to_actor_graph))
-    return path_data
+    return graph_data, path_data
 
 ##########
 # Driver #
@@ -151,7 +152,6 @@ def process_data() -> None:
     actor_to_movie_graph, largest_cc_nodes = extract_largest_connected_component_graph(actor_to_movie_graph)
     largest_cc_actors = largest_cc_nodes.intersection(actor_to_movie_edgelist.cast.unique())
     actor_to_actor_graph = nx.projected_graph(actor_to_movie_graph, largest_cc_actors)
-    actor_to_actor_graph = nx.k_core(actor_to_actor_graph, 20) ; actor_to_actor_graph, largest_cc_actors = extract_largest_connected_component_graph(actor_to_actor_graph) # @todo remove this
     print(f'The actor-to-actor graph has {len(actor_to_actor_graph.nodes())} nodes.')
     assert len(set(actor_to_actor_graph.nodes()).intersection(actor_to_movie_edgelist.title)) == 0
     print('Running APSP via SciPy.')
@@ -161,16 +161,18 @@ def process_data() -> None:
     nx_apsp_dist_map, nx_apsp_time = apsp_via_nx(actor_to_actor_graph)
     print(f'APSP via NetworkX took {nx_apsp_time} seconds.')
     _sanity_check_apsp_results(scipy_apsp_dist_map, nx_apsp_dist_map)
-    path_data = generate_path_data_for_visualization(actor_to_actor_graph)
+    graph_data, path_data = generate_path_data_for_visualization(actor_to_actor_graph)
     kevin_bacon_dist_dict = kevin_bacon_distances_from_tensor_map(scipy_apsp_dist_map)
     min_kevin_bacon_distance = min(kevin_bacon_dist_dict.values())
     print('Saving results.')
     output_dict = {
-        'scipy_apsp_time': scipy_apsp_time,
-        'nx_apsp_time': nx_apsp_time,
-        'kevin_bacon_distances': kevin_bacon_dist_dict,
-        'min_kevin_bacon_distance': min_kevin_bacon_distance,
-        'path_data': path_data,
+        'scipyAPSPTime': scipy_apsp_time,
+        'nxAPSPTime': nx_apsp_time,
+        'actorNameToKevinBaconDistance': kevin_bacon_dist_dict,
+        'minKevinBaconDistance': min_kevin_bacon_distance,
+        'kCoreValueForVisualziation': K_CORE_VALUE_FOR_VISUALZIATION,
+        'graphData': graph_data,
+        'pathLookup': path_data,
     }
     with open(OUTPUT_JSON_FILE_LOCATION, 'w') as file_handle:
         json.dump(output_dict, file_handle, indent=4)
