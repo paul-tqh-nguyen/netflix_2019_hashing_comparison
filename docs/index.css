@@ -118,10 +118,13 @@
     overflow-y: auto;
 }
 
-.visualization-text-display-title {
-    font-size: 1.5rem;
+#visualization-text-display p {
     padding-left: 40px;
     padding-right: 40px;
+}
+
+.visualization-text-display-title {
+    font-size: 1.5rem;
 }
 
 div.tooltip {
@@ -215,6 +218,11 @@ body {
 .main-section {
     text-align: center;
     padding-bottom: 40px;
+}
+
+.main-section p {
+    padding-left: 10vw;
+    padding-right: 10vw;
 }
 
 .main-section h3 {

@@ -19,15 +19,15 @@
 	</ul>
       </center>
     </div>
-
     <section id="title-section">
       <h1>Hashing Is Not A Silver Bullet</h1>
       <p>A case study in how satisfaction with O(1) performance can be insufficient.</p>
     </section>
-    
     <section class="main-section">
       <h3>Introduction</h3>
-      <p>Text text text text text text text text text text text text text text text text text text text text text text text text text text text</p>
+      <p>Very frequently, computer scientists gloss over implementation details that can have huge performance implications that can make or break a product or research idea. For example, a naive computer scientist might say that the choice between merge sort and quicksort is insignificant give their equivalent computational complexity. This is demonstrably false due to the cost of memory allocation in merge sort.<p>
+	<p>This same sort of mistake happens frequently when people use hash tables. Newer computer scientists are frequently satisfied with the constant time lookup cost of hash tables and don’t go into optimizing beyond that. However, hash table lookups have a non-negligible cost associated with them due to <a href="https://en.wikipedia.org/wiki/Locality_of_reference" target="_blank">spatial locality</a>. Looking up several items in a hash table frequently requires hopping around several non-adjacent places in memory. Though the lookups are O(1), the constant time impact on performance due to a lack of spatial locality  is non-negligible, especially for large inputs.<p>
+	<p>This article aims to show empirically how hash table lookups are not sufficiently performant by comparing the performance of Dijkstra’s algorithm on graphs represented using hash tables and on graphs using adjacency matrices, which are stored in contiguous blocks of memory. Our inputs will be actor-to-actor collaboration graphs generated from real-world data found in the <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Netflix shows and movies as of 2019</a>. A visualization of a subset of the graph is shown below.<p>
       <div id="visualization-section">
 	<h3 id="visualization-title"></h3>
 	<table id="visualization-table">
@@ -57,16 +57,14 @@
           </tr>
 	</table>
       </div>
+      <p>NB: This visualization is only of a <a href="https://en.wikipedia.org/wiki/Degeneracy_(graph_theory)#k-Cores" target="_blank">k-core</a> subset of the graph, not the entire graph that we analyze in this article.</p>
     </section>
-    
     <section class="main-section bg-light lg code-test-side-a row-width-default flexible-content-section-26">
       <h3>Section Title</h3>
       <h2 class="feature-box_title">A</h2>
       <h2 class="feature-box_title" style="color:#dc99f7;">B</h2>
       <h2 class="feature-box_title" style="color:#68bbf4;">C</h2>
     </section>
-
-
     <section class="main-section">
       <h3>Title</h3>
       <p>Text text text text text text text text text text text text text</p>
@@ -75,7 +73,6 @@
       <p id="min-kevin-bacon-distance"></p>
       <script>runVisualization()</script>
     </section>
-    
     <section class="lg bg-dark boxes-4up">
       <div class="row full-width">
         <div class="feature-box column medium-6">
