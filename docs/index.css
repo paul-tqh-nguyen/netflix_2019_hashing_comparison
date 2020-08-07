@@ -15,7 +15,7 @@
 }
 
 #visualization-dropdown-container #end-node-dropdown {
-    border-color: magenta;
+    border-color: #DC9AF6;
 }
 
 #path-display-text p {
@@ -35,7 +35,7 @@
 }
 
 #path-display-text .path-display-text-end-node {
-    border-color: magenta;
+    border-color: #DC9AF6;
 }
 
 #path-display-text .path-display-text-down-arrow {
@@ -53,7 +53,7 @@
 .selected-end-node {
     transition: fill 0.5s, stroke-width 0.5s;
     r: 6;
-    fill: magenta;
+    fill: #DC9AF6;
     stroke: black;
     stroke-width: 2px;
 }
@@ -3394,352 +3394,6 @@ label.middle {
 
 .fa-meetup:before {
     content: "\f2e0";
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1.mega-sticky #mega-menu-menu-1 li.mega-menu-item.mega-show-when-sticky.mega-hide-on-mobile {
-        display: none;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-115993.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115993.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115993 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-115994.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115994.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115994 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-115996.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115996.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115996 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-115997.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115997.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115997 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-119125.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-119125.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-119125 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-115995.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115995.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-115995 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-116002.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116002.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116002 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-116003.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116003.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116003 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-116004.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116004.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116010.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116010 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-116005.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116005.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116007 > a.mega-menu-link:before {
-        background-size: 20px 20px;
-        width: 20px;
-        height: 20px;
-        line-height: 20px;
-    }
-
-}
-
-@media only screen and (max-width: 1023px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 .mega-sub-menu li#mega-menu-item-116008.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-@media only screen and (min-width: 1024px) {
-    #mega-menu-wrap-menu-1 #mega-menu-menu-1 li#mega-menu-item-116008.mega-icon-top > a.mega-menu-link:before {
-        width: 100%;
-        min-width: 20px;
-        background-position-x: center;
-    }
-
-}
-
-.slick-slider {
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-}
-
-.slick-list {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
-}
-
-.slick-list:focus {
-    outline: none;
-}
-
-.slick-list.dragging {
-    cursor: pointer;
-    cursor: hand;
 }
 
 .slick-slider .slick-track,
@@ -16088,15 +15742,6 @@ a.thumbnail image {
     box-shadow: none;
 }
 
-.menu {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-}
-
 [data-whatinput="mouse"] .menu li {
     outline: 0;
 }
@@ -17506,6 +17151,7 @@ footer {
 }
 
 footer a {
+    transition: all 0.25s ease-in-out;
     color: #9599a1;
 }
 
@@ -17621,49 +17267,12 @@ footer .social-icons a:hover .fa-inverse {
 }
 
 .footer-menu-widget {
-    padding-right: 0;
+    text-align: center;
 }
 
-.footer-menu-widget .extra-margin {
-    margin-bottom: 1.5rem;
-}
-
-.footer-menu-widget .menu li:last-child {
-    margin-bottom: 0;
-}
-
-@media screen and (min-width: 40em) {
-    .footer-widgets ul:last-child {
-        margin-bottom: 0;
-    }
-
-}
-
-@media screen and (min-width: 40em) {
-    .footer-widgets .row-1 {
-        margin-bottom: 60px;
-    }
-
-}
-
-.footer-form input[type="date"],
-.footer-form input[type="datetime-local"],
-.footer-form input[type="datetime"],
-.footer-form input[type="email"],
-.footer-form input[type="month"],
-.footer-form input[type="number"],
-.footer-form input[type="password"],
-.footer-form input[type="search"],
-.footer-form input[type="tel"],
-.footer-form input[type="text"],
-.footer-form input[type="time"],
-.footer-form input[type="url"],
-.footer-form input[type="week"],
-.footer-form textarea {
-    background-color: #525865;
-    border-color: transparent;
-    height: 2.2rem;
-    font-size: 13px;
+.footer-menu-widget a {
+    padding-left: 8vw;
+    padding-right: 8vw;
 }
 
 .footer-form #mktoForm_477 {

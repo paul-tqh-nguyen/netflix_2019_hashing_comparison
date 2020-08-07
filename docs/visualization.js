@@ -11,8 +11,8 @@ const runVisualization = (dataLocationBaseName) => {
     const plotContainer = document.getElementById('svg-container');
     const svg = d3.select('#graph-svg');
 
-    const alphaDecay = 0.0001;
-    const velocityDecay = 0.5;
+    const alphaDecay = 0.01; // 0.0001;
+    const velocityDecay = 0.9; // 0.5;
     const paddingBetweenNodes = 25;
     const linkForceAlpha = 0.005;
     const boundingBoxForceForceAlpha = 0.5;
