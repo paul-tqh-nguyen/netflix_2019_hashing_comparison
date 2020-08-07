@@ -31,7 +31,7 @@ NETFLIX_CSV_FILE_LOCATION = './data/netflix_titles.csv'
 
 OUTPUT_JSON_FILE_LOCATION = './docs/processed_data.json'
 
-K_CORE_VALUE_FOR_VISUALZIATION = 30
+K_CORE_VALUE_FOR_VISUALZIATION = 35
 
 ##################################################
 # Application Specific Data Processing Utilities #

@@ -29,10 +29,33 @@
       <h3>Introduction</h3>
       <p>Text text text text text text text text text text text text text text text text text text text text text text text text text text text</p>
       <div id="visualization-section">
-	<h3>Netflix 2019 Actor Collaboration 20-Core Visualization</h3>
-	<div id="svg-container">
-	  <svg id="graph-svg"></svg>
-	</div>
+	<h3 id="visualization-title"></h3>
+	<table id="visualization-table">
+          <tr>
+	    <td>
+	      <div id="svg-container">
+	      	<svg id="graph-svg"></svg>
+	      </div>
+	    </td>
+	    <td>
+	      <div id="visualization-text-display">
+		<p class="visualization-text-display-title">Shortest Actor Collaboration Path</p>
+		<div id="visualization-dropdown-container">
+		  <p>
+		    Start Node:
+		    <select id="start-node-dropdown" onchange="updatePath()"></select>
+		  </p>
+		  <p>
+		    End Node:
+		    <select id="end-node-dropdown" onchange="updatePath()"></select>
+		  </p>
+		</div>
+		<p class="visualization-text-display-title">Full Path</p>
+		<div id="path-display-text"></div>
+	      </div>
+	    </td>
+          </tr>
+	</table>
 	<p id="scipy-apsp-time"></p>
 	<p id="nx-apsp-time"></p>
 	<p id="min-kevin-bacon-distance"></p>
