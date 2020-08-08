@@ -1,6 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css?family=Oxygen');
 
+a {
+    transition: all 0.25s;
+}
+
 #visualization-dropdown-container {
     padding: 20px;
 }
@@ -187,9 +191,9 @@ body {
     display: block;
     text-align: center;
     text-decoration: none;
-    padding-left: 50px;
-    padding-right: 50px;
-    font-size: 18px;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    font-size: 1vw;
     padding-top: 17px;
     padding-bottom: 17px;
     color: #9599A1;

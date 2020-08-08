@@ -32,39 +32,39 @@
     <section id="introduction-section" class="main-section">
       <h3>Introduction</h3>
       <p>Very frequently, computer scientists gloss over implementation details that can have huge performance implications that can make or break a product or research idea. For example, a naive computer scientist might say that the choice between merge sort and quicksort is insignificant give their equivalent computational complexity. This is demonstrably false due to the cost of memory allocation in merge sort.<p>
-	<p>This same sort of mistake happens frequently when people use hash tables. Newer computer scientists are frequently satisfied with the constant time lookup cost of hash tables and don’t go into optimizing beyond that. However, hash table lookups have a non-negligible cost associated with them due to <a href="https://en.wikipedia.org/wiki/Locality_of_reference" target="_blank">spatial locality</a>. Looking up several items in a hash table frequently requires hopping around several non-adjacent places in memory. Though the lookups are <i>O(1)</i>, the constant time impact on performance due to a lack of spatial locality  is non-negligible, especially for large inputs where hops in memory will likely be larger.<p>
+      <p>This same sort of mistake happens frequently when people use hash tables. Newer computer scientists are frequently satisfied with the constant time lookup cost of hash tables and don’t go into optimizing beyond that. However, hash table lookups have a non-negligible cost associated with them due to <a href="https://en.wikipedia.org/wiki/Locality_of_reference" target="_blank">spatial locality</a>. Looking up several items in a hash table frequently requires hopping around several non-adjacent places in memory. Though the lookups are <i>O(1)</i>, the constant time impact on performance due to a lack of spatial locality  is non-negligible, especially for large inputs where hops in memory will likely be larger.<p>
       <p>This article aims to show empirically how hash table lookups are not sufficiently performant by comparing the performance of <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">Dijkstra’s algorithm</a> on graphs represented using hash tables (<a href="https://networkx.github.io/" target="_blank">NetworkX</a>) and on graphs using adjacency matrices (<a href="https://docs.scipy.org/doc/scipy/reference/sparse.csgraph.html" target="_blank">SciPy sparse</a>), which are stored in contiguous blocks of memory. Our inputs will be actor-to-actor collaboration graphs generated from real-world data found in the <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Netflix shows and movies as of 2019</a>. </p>
       <p>The source code for our experiments and findings can be found <a href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison" target="_blank">here</a>.</p>
       <p>A visualization of a subset of the input graph is shown below.<p>
-      <div id="visualization-section">
-	<h3 id="visualization-title"></h3>
-	<table id="visualization-table">
-          <tr>
-	    <td>
-	      <div id="svg-container">
-	      	<svg id="graph-svg"></svg>
-	      </div>
-	    </td>
-	    <td>
-	      <div id="visualization-text-display">
-		<p class="visualization-text-display-title">Shortest Actor Collaboration Path</p>
-		<div id="visualization-dropdown-container">
-		  <p>
-		    Start Node:
-		    <select id="start-node-dropdown" onchange="updatePath()"></select>
-		  </p>
-		  <p>
-		    End Node:
-		    <select id="end-node-dropdown" onchange="updatePath()"></select>
-		  </p>
+	<div id="visualization-section">
+	  <h3 id="visualization-title"></h3>
+	  <table id="visualization-table">
+            <tr>
+	      <td>
+		<div id="svg-container">
+	      	  <svg id="graph-svg"></svg>
 		</div>
-		<p class="visualization-text-display-title">Full Path</p>
-		<div id="path-display-text"></div>
-	      </div>
-	    </td>
-          </tr>
-	</table>
-      </div>
+	      </td>
+	      <td>
+		<div id="visualization-text-display">
+		  <p class="visualization-text-display-title">Shortest Actor Collaboration Path</p>
+		  <div id="visualization-dropdown-container">
+		    <p>
+		      Start Node:
+		      <select id="start-node-dropdown" onchange="updatePath()"></select>
+		    </p>
+		    <p>
+		      End Node:
+		      <select id="end-node-dropdown" onchange="updatePath()"></select>
+		    </p>
+		  </div>
+		  <p class="visualization-text-display-title">Full Path</p>
+		  <div id="path-display-text"></div>
+		</div>
+	      </td>
+            </tr>
+	  </table>
+	</div>
       <p>NB: This visualization is only of a <a href="https://en.wikipedia.org/wiki/Degeneracy_(graph_theory)#k-Cores" target="_blank">k-core</a> subset of the graph, not the entire graph that we analyze in this article.</p>
     </section>
     <section id="experiment-section" class="main-section bg-light lg code-test-side-a row-width-default flexible-content-section-26">
@@ -81,8 +81,8 @@
       <p>We can then generate an actor-to-actor collaboration graph by performing a bipartite graph projection of the actor-to-movie graph.</p>
       <p>Since this generated actor-to-actor graph might be disconnected, we'll take the largest connected component of it to use as the input for our experiment.</p>
       <p>This experiment was inspired by the <a href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon" target="_blank">Six Degrees of Kevin Bacon</a>.</p>
-      <p>To measure the runtime performance of a graph representation using hash tables, we'll measure the wall time necessary to run <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path_length.html#networkx.algorithms.shortest_paths.generic.shortest_path_length" target="_blank">NetworkX's implementation of Diskstra's algorithm</a>.</p>
-      <p>To measure the runtime performance of a graph representation using adjacency matrices, we'll measure the wall time necessary to run <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.dijkstra.html#scipy.sparse.csgraph.dijkstra" target="_blank">SciPy's matrix library's implementation of Diskstra's algorithm</a>.
+      <p>To measure the runtime performance of a graph representation using hash tables, we'll measure the wall time necessary to run <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path_length.html#networkx.algorithms.shortest_paths.generic.shortest_path_length" target="_blank">NetworkX's implementation of Dijkstra's algorithm</a>.</p>
+      <p>To measure the runtime performance of a graph representation using adjacency matrices, we'll measure the wall time necessary to run <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.dijkstra.html#scipy.sparse.csgraph.dijkstra" target="_blank">SciPy's matrix library's implementation of Dijkstra's algorithm</a>.
       <p>The source code for the data processing, graph processing, and result gathering can be found <a href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison" target="_blank">here</a>.</p>
       <br/>
       <h2 class="feature-box_title">Results</h2>
@@ -106,39 +106,6 @@
     <section id="further-reading-section" class="lg bg-dark boxes-4up">
       <div class="row full-width">
         <div class="feature-box column medium-6">
-          <div class="feature-box_inner">
-            <h2 style="color: #FEFEFE">More of My Work</h2>
-            <div class="panel-recent-events">
-              <div class="events">
-                <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/impact_of_attention" target="_blank">
-                    <h4 class="event-title">The Impact of Attention</h4>
-                    <div class="description">A demonstration with empirical evidence of how attention can improve the performance of an LSTM text classifier.</div>
-                  </a>
-                </div>
-                <div class="event-item undefined">
-                  <a href="http://www.connellybarnes.com/work/project_pages/image_perforation/" target="_blank">
-                    <h4 class="event-title">Image Perforation</h4>
-                    <div class="description">Automatically Accelerating Image Pipelines by Intelligently Skipping Samples</div>
-                  </a>
-                </div>
-                <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/reuters_topic_labelling" target="_blank">
-                    <h4 class="event-title">Multi-Label Topic Classification on Reuters Newswire Articles</h4>
-                    <div class="description">An example of how RNNs can perform extremely poorly on an NLP task compared to CNNs.</div>
-                  </a>
-                </div>
-                <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/joel_spolsky_text_generator" target="_blank">
-                    <h4 class="event-title">Joel Spolsky Text Generator</h4>
-                    <div class="description">A Joel Spolsky blog text generator implemented via a character-level RNN.</div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="feature-box column medium-6" style="background: #2cc961">
           <div class="feature-box_inner">
             <h2 style="color: #FEFEFE">Further Reading</h2>
             <div class="panel-recent-events">
@@ -165,6 +132,39 @@
                   <a href="https://en.wikipedia.org/wiki/Space%E2%80%93time_tradeoff" target="_blank">
                     <h4 class="event-title">Space-Time Tradeoff</h4>
                     <div class="description">The space-time tradeoff is another concept frequently glossed over or taken for granted.</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-box column medium-6" style="background: #2cc961">
+	  <div class="feature-box_inner">
+            <h2 style="color: #FEFEFE">More of My Work</h2>
+            <div class="panel-recent-events">
+              <div class="events">
+                <div class="event-item undefined">
+                  <a href="https://github.com/paul-tqh-nguyen/impact_of_attention" target="_blank">
+                    <h4 class="event-title">The Impact of Attention</h4>
+                    <div class="description">A demonstration with empirical evidence of how attention can improve the performance of an LSTM text classifier.</div>
+                  </a>
+                </div>
+                <div class="event-item undefined">
+                  <a href="http://www.connellybarnes.com/work/project_pages/image_perforation/" target="_blank">
+                    <h4 class="event-title">Image Perforation</h4>
+                    <div class="description">Image Perforation is an optimization technique for automatically exploring the space of performance-accuracy trade-offs in an image processing pipeline.</div>
+                  </a>
+                </div>
+                <div class="event-item undefined">
+                  <a href="https://github.com/paul-tqh-nguyen/reuters_topic_labelling" target="_blank">
+                    <h4 class="event-title">Multi-Label Topic Classification on Reuters Newswire Articles</h4>
+                    <div class="description">A demonstration of how RNN-based architectures can perform extremely poorly on an NLP task compared to convolutional neural networks or dense MLPs.</div>
+                  </a>
+                </div>
+                <div class="event-item undefined">
+                  <a href="https://github.com/paul-tqh-nguyen/joel_spolsky_text_generator" target="_blank">
+                    <h4 class="event-title">Joel Spolsky Text Generator</h4>
+                    <div class="description">A Joel Spolsky blog text generator implemented via a character-level RNN.</div>
                   </a>
                 </div>
               </div>

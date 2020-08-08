@@ -1,11 +1,17 @@
 #!/usr/bin/python3
-'#!/usr/bin/python3 -OO' # @todo use this instead
 
 '''
-Mention something about APSP == all pairs shortest paths
-'''
+This file contains functionality used to compare how Dijkstra's algorithm performs via a hash table graph representation against how it performs via an adjacency matrix representation. 
 
-# @todo update doc string
+Sections:
+* Imports
+* Globals
+* Application Specific Data Processing Utilities
+* SciPy APSP Utilities
+* NetworkX APSP Utilities
+* Path Data for Visualization Utilities
+* Driver
+'''
 
 ###########
 # Imports #
@@ -20,8 +26,6 @@ import operator
 from typing import Tuple, List, Optional
 
 from misc_utilities import *
-
-# @todo verify that all the imports above are used 
 
 ###########
 # Globals #
