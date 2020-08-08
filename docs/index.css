@@ -217,6 +217,7 @@ body {
 
 .main-section {
     text-align: center;
+    padding-top: 60px;
     padding-bottom: 40px;
 }
 
@@ -226,7 +227,6 @@ body {
 }
 
 .main-section h3 {
-    padding-top: 40px;
     padding-bottom: 40px;
     font-size: 1.75em;
 }
@@ -17640,10 +17640,10 @@ ul.disc {
 }
 
 .panel-recent-events .event-item {
+    transition: all 0.25s;
     padding: 1.4375rem;
     padding-bottom: 1.5625rem;
     border-bottom: 1px solid #d2d5da;
-    padding-left: 9.0625rem;
 }
 
 .panel-recent-events .event-item:hover,
@@ -17692,15 +17692,10 @@ ul.disc {
     font-weight: 600;
 }
 
-.panel-recent-events .description {
-    color: #fefefe;
-}
-
 .panel-recent-events .event-item {
     position: relative;
     padding: 0.9375rem;
     padding-right: 1.25rem;
-    padding-left: 6.25rem;
     border-bottom: none;
 }
 

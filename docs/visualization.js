@@ -3,6 +3,7 @@ const isNumber = obj => typeof(obj)==='number';
 const sum = inputArray => inputArray.reduce((a, b) => a + b, 0);
 const mean = inputArray => sum(inputArray) / inputArray.length;
 const sigmoid = x => 1/(1+Math.pow(Math.E, -x));
+const randomChoice = choices => choices[Math.floor(Math.random() * choices.length)];
 
 let updatePath;
 
@@ -184,7 +185,8 @@ const runVisualization = (dataLocationBaseName) => {
                 linkLookup[target][source] = link;
                 link.className = 'unselected-link';
             }, {});
-            nodeData.map(datum => datum.id).sort().forEach(actorName => {
+            const sortedActorNames = nodeData.map(datum => datum.id).sort();
+            sortedActorNames.forEach(actorName => {
                 const startOptionElement = document.createElement('option');
                 startOptionElement.setAttribute('value', actorName);
                 startOptionElement.innerHTML = actorName;
@@ -194,6 +196,8 @@ const runVisualization = (dataLocationBaseName) => {
                 startNodeDropdown.append(startOptionElement);
                 endNodeDropdown.append(endOptionElement);
             });
+            startNodeDropdown.value = randomChoice(sortedActorNames);
+            endNodeDropdown.value = randomChoice(sortedActorNames);
             const redraw = () => {
                 render({pathLookup, linkLookup, linkData, nodeData, actorNameToNode, actorNameToNeighborActorNames, actorNameToKevinBaconDistance});
             };
