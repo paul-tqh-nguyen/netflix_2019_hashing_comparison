@@ -82,6 +82,9 @@ const runVisualization = (dataLocationBaseName) => {
         drag.on('drag', (d,i) => {
             d.x += d3.event.dx;
             d.y += d3.event.dy;
+            simulation
+                .alpha(0.5)
+                .restart();
         });
         
 	simulation
@@ -197,7 +200,10 @@ const runVisualization = (dataLocationBaseName) => {
                 endNodeDropdown.append(endOptionElement);
             });
             startNodeDropdown.value = randomChoice(sortedActorNames);
-            endNodeDropdown.value = randomChoice(sortedActorNames);
+            endNodeDropdown.value = startNodeDropdown.value;
+            while (endNodeDropdown.value == startNodeDropdown.value) {
+                endNodeDropdown.value = randomChoice(sortedActorNames);
+            }
             const redraw = () => {
                 render({pathLookup, linkLookup, linkData, nodeData, actorNameToNode, actorNameToNeighborActorNames, actorNameToKevinBaconDistance});
             };

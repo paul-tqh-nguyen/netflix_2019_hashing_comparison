@@ -27,14 +27,14 @@
     </div>
     <section id="title-section">
       <h1>Hashing Is Not A Silver Bullet</h1>
-      <p>A case study in how satisfaction with O(1) performance can be insufficient.</p>
+      <p>A case study in how naive satisfaction with O(1) performance can be insufficient.</p>
     </section>
     <section id="introduction-section" class="main-section">
       <h3>Introduction</h3>
-      <p>Very frequently, computer scientists gloss over implementation details that can have huge performance implications that can make or break a product or research idea. For example, a naive computer scientist might say that the choice between merge sort and quicksort is insignificant give their equivalent computational complexity. This is demonstrably false due to the cost of memory allocation in merge sort.<p>
-      <p>This same sort of mistake happens frequently when people use hash tables. Newer computer scientists are frequently satisfied with the constant time lookup cost of hash tables and don’t go into optimizing beyond that. However, hash table lookups have a non-negligible cost associated with them due to <a href="https://en.wikipedia.org/wiki/Locality_of_reference" target="_blank">spatial locality</a>. Looking up several items in a hash table frequently requires hopping around several non-adjacent places in memory. Though the lookups are <i>O(1)</i>, the constant time impact on performance due to a lack of spatial locality  is non-negligible, especially for large inputs where hops in memory will likely be larger.<p>
-      <p>This article aims to show empirically how hash table lookups are not sufficiently performant by comparing the performance of <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">Dijkstra’s algorithm</a> on graphs represented using hash tables (<a href="https://networkx.github.io/" target="_blank">NetworkX</a>) and on graphs using adjacency matrices (<a href="https://docs.scipy.org/doc/scipy/reference/sparse.csgraph.html" target="_blank">SciPy sparse</a>), which are stored in contiguous blocks of memory. Our inputs will be actor-to-actor collaboration graphs generated from real-world data found in the <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Netflix shows and movies as of 2019</a>. </p>
-      <p>The source code for our experiments and findings can be found <a href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison" target="_blank">here</a>.</p>
+      <p>Very frequently, computer scientists gloss over implementation details that can have huge performance implications that can make or break a product or research idea. For example, a naive computer scientist might say that the choice between merge sort and quicksort is insignificant give their equivalent computational complexity. This is demonstrably false due to the non-negligible cost of memory allocation in merge sort.<p>
+      <p>This same sort of mistake happens frequently when we use hash tables. Newer computer scientists are frequently satisfied with the constant time lookup cost of hash tables and don’t go into optimizing beyond that. However, hash table lookups have a non-negligible cost associated with them due to <a target="_blank" href="https://en.wikipedia.org/wiki/Locality_of_reference">spatial locality</a>. Looking up several items in a hash table frequently requires hopping around several non-adjacent locations in memory. Though the lookups are <i>O(1)</i>, the constant time impact on performance due to a lack of spatial locality can be significant, especially for large inputs.<p>
+      <p>This article aims to empirically show how hash table lookups are not sufficiently performant by comparing the performance of <a target="_blank" href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra’s algorithm</a> on graphs represented using hash tables (<a target="_blank" href="https://networkx.github.io/">NetworkX</a>) and on graphs using adjacency matrices (<a target="_blank" href="https://docs.scipy.org/doc/scipy/reference/sparse.csgraph.html">SciPy sparse</a>), which are stored in contiguous blocks of memory. Our inputs will be actor-to-actor collaboration graphs generated from real-world data found in the <a target="_blank" href="https://www.kaggle.com/shivamb/netflix-shows">Netflix shows and movies as of 2019</a>. </p>
+      <p>The source code for our experiments and findings can be found <a target="_blank" href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison">here</a>.</p>
       <p>A visualization of a subset of the input graph is shown below.<p>
 	<div id="visualization-section">
 	  <h3 id="visualization-title"></h3>
@@ -65,25 +65,25 @@
             </tr>
 	  </table>
 	</div>
-      <p>NB: This visualization is only of a <a href="https://en.wikipedia.org/wiki/Degeneracy_(graph_theory)#k-Cores" target="_blank">k-core</a> subset of the graph, not the entire graph that we analyze in this article.</p>
+      <p>NB: This visualization is only of a <a target="_blank" href="https://en.wikipedia.org/wiki/Degeneracy_(graph_theory)#k-Cores">k-core</a> subset of the graph, not the entire graph that we analyze in this article.</p>
     </section>
     <section id="experiment-section" class="main-section bg-light lg code-test-side-a row-width-default flexible-content-section-26">
       <h3>Experiment Overview & Results</h3>
       <h2 class="feature-box_title" style="color:#68bbf4;">Broad Explanation</h2>
-      <p>We'll use the <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Netflix shows and movies as of 2019</a> to generate an unweighted and undirected graph of actors where two actors are connected if they both starred in the same movie.</p>
-      <p>We'll compare how <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">Dijkstra’s algorithm</a> performs using a graph representation that relies on hash tables (how <a href="https://networkx.github.io/" target="_blank">NetworkX</a> graphs are respresented) against using a graph representation that relies on adjacency matrices (how <a href="https://docs.scipy.org/doc/scipy/reference/sparse.csgraph.html" target="_blank">SciPy sparse matrices</a> represents graphs). We are choosing to use the same algorithm on two different data representations to isolate the impact of hashing on runtime performance.</p>
+      <p>We'll use the <a target="_blank" href="https://www.kaggle.com/shivamb/netflix-shows">Netflix shows and movies as of 2019</a> to generate an unweighted and undirected graph of actors where two actors are connected if they both starred in the same movie.</p>
+      <p>We'll compare how <a target="_blank" href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra’s algorithm</a> performs using a graph representation that relies on hash tables (how <a target="_blank" href="https://networkx.github.io/">NetworkX</a> graphs are respresented) against using a graph representation that relies on adjacency matrices (how <a target="_blank" href="https://docs.scipy.org/doc/scipy/reference/sparse.csgraph.html">SciPy sparse matrices</a> represents graphs). We are choosing to use the same algorithm on two different data representations to isolate the impact of hashing on runtime performance.</p>
       <br/>
       <h2 class="feature-box_title" style="color:#dc99f7;">Implementation Details</h2>
       <p>This section will cover the specifics of what we've done to process our data for the sake of clarity. Feel free to skip this section. </p>
-      <p>We'll use the <a href="https://www.kaggle.com/shivamb/netflix-shows" target="_blank">Netflix shows and movies as of 2019</a> as our raw data source. The data consists of movies and TV shows along with the relevant cast members, audience countries, genres, etc.</p>
+      <p>We'll use the <a target="_blank" href="https://www.kaggle.com/shivamb/netflix-shows">Netflix shows and movies as of 2019</a> as our raw data source. The data consists of movies and TV shows along with the relevant cast members, audience countries, genres, etc.</p>
       <p>We'll run our experiment on a graph of actors who've worked together on a movie (we'll exclude TV shows since it's more likely that two actors can work on the same TV show without ever having seen each other on set).</p>
       <p>We'll generate this graph by first taking our raw data CSV and normalizing it so that there's an actor column (that contains only one actor) and a movie column. This gives us a bipartite graph (in the form of an edge list) of movies to actors.</p>
       <p>We can then generate an actor-to-actor collaboration graph by performing a bipartite graph projection of the actor-to-movie graph.</p>
       <p>Since this generated actor-to-actor graph might be disconnected, we'll take the largest connected component of it to use as the input for our experiment.</p>
-      <p>This experiment was inspired by the <a href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon" target="_blank">Six Degrees of Kevin Bacon</a>.</p>
-      <p>To measure the runtime performance of a graph representation using hash tables, we'll measure the wall time necessary to run <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path_length.html#networkx.algorithms.shortest_paths.generic.shortest_path_length" target="_blank">NetworkX's implementation of Dijkstra's algorithm</a>.</p>
-      <p>To measure the runtime performance of a graph representation using adjacency matrices, we'll measure the wall time necessary to run <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.dijkstra.html#scipy.sparse.csgraph.dijkstra" target="_blank">SciPy's matrix library's implementation of Dijkstra's algorithm</a>.
-      <p>The source code for the data processing, graph processing, and result gathering can be found <a href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison" target="_blank">here</a>.</p>
+      <p>This experiment was inspired by the <a target="_blank" href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon">Six Degrees of Kevin Bacon</a>.</p>
+      <p>To measure the runtime performance of a graph representation using hash tables, we'll measure the wall time necessary to run <a target="_blank" href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.shortest_paths.generic.shortest_path_length.html#networkx.algorithms.shortest_paths.generic.shortest_path_length">NetworkX's implementation of Dijkstra's algorithm</a>.</p>
+      <p>To measure the runtime performance of a graph representation using adjacency matrices, we'll measure the wall time necessary to run <a target="_blank" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csgraph.dijkstra.html#scipy.sparse.csgraph.dijkstra">SciPy's matrix library's implementation of Dijkstra's algorithm</a>.
+      <p>The source code for the data processing, graph processing, and result gathering can be found <a target="_blank" href="https://github.com/paul-tqh-nguyen/netflix_2019_hashing_comparison">here</a>.</p>
       <br/>
       <h2 class="feature-box_title">Results</h2>
       <p>We have the following results:</p>
@@ -92,15 +92,15 @@
       <p id="min-kevin-bacon-distance"></p>
       <p>Note that the graph used for this experiment are different than the graph visualized above in this article's introduction. The graph visualized earlier is a subgraph of the graph used for our experiment.</p>
       <p>It's clear that the adjacency matrix graph representation leads to better performance as it increases the runtime performance by an order of magnitude. Some of that might be due to differences in implementation, but much of it is due to costs of hopping around in memory that stem from hash table lookups.</p>
-      <p>One caveat to be aware of here is that this experiment only measures the performance of <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">Dijkstra’s algorithm</a> used to determine path lengths. The performance on using <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm" target="_blank">Dijkstra’s algorithm</a> to find and store the paths themselves may differ.</p>
+      <p>One caveat to be aware of here is that this experiment only measures the performance of <a target="_blank" href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra’s algorithm</a> used to determine path lengths. The performance on using <a target="_blank" href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra’s algorithm</a> to find and store the paths themselves may differ.</p>
     </section>
     <section id="conclusion-section" class="main-section">
       <h3>Concluding Remarks</h3>
       <p>Machine learning, data analysis, and graph analysis algorithms are becoming more and more popular, so the demand for processing large datasets is growing significantly.</p>
-      <p>Glossing over small constant time differences in performance, which may be negligible for toy problems, can be costly in practice as it may lead to days to weeks of wasted processing time.</p>
+      <p>Glossing over small constant time differences in performance, which may be negligible for toy problems, can be costly in practice as it may lead to hours or days of wasted processing time.</p>
       <p>Given how many software development interviews involve solving whiteboard problems where being satisfied with the <i>O(1)</i> performance of hashing is satisfactory (since the interview questions are often toy problems), this mindset of glossing over fine implementation details is being propagated.</p>
-      <p>Hopefully, the information presented in this article can make the world more aware of the importance of a deeper understanding of performance beyond the insufficient metric that is computational complexity. </p>
-      <p>We hope at the very least that this article shows that using using a library simply because it has nicer interface and is more flexible (like <a href="https://networkx.github.io/" target="_blank">NetworkX</a>) doesn't always lead to the best performance.</p>
+      <p>Hopefully, the information presented in this article can make the world more aware of the importance of a deeper understanding of performance beyond computational complexity.</p>
+      <p>We hope at the very least that this article shows that using using a library simply because it has nicer interface and is more flexible (like <a target="_blank" href="https://networkx.github.io/">NetworkX</a>) doesn't always lead to the best performance.</p>
       <script>runVisualization()</script>
     </section>
     <section id="further-reading-section" class="lg bg-dark boxes-4up">
@@ -111,25 +111,25 @@
             <div class="panel-recent-events">
               <div class="events">
                 <div class="event-item undefined">
-                  <a href="http://graphblas.org/index.php?title=Graph_BLAS_Forum" target="_blank">
+                  <a target="_blank" href="https://graphblas.github.io/">
                     <h4 class="event-title">GraphBLAS</h4>
                     <div class="description">GraphBLAS defines a standard for writing graph algorithms using linear algebra which has the advantage of better spatial locality.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/" target="_blank">
+                  <a target="_blank" href="https://www.joelonsoftware.com/2002/11/11/the-law-of-leaky-abstractions/">
                     <h4 class="event-title">The Law of Leaky Abstractions</h4>
                     <div class="description">Glossing over the costs of hash table lookup is another instance of The Law of Leaky Abstractions coming into play.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="https://en.wikipedia.org/wiki/Locality_of_reference" target="_blank">
+                  <a target="_blank" href="https://en.wikipedia.org/wiki/Locality_of_reference">
                     <h4 class="event-title">The Principle of Locality</h4>
                     <div class="description">The Principle of Locality is a concept that's frequently neglected as it frequently (but not always) deals with constant-time performance impacts.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="https://en.wikipedia.org/wiki/Space%E2%80%93time_tradeoff" target="_blank">
+                  <a target="_blank" href="https://en.wikipedia.org/wiki/Space%E2%80%93time_tradeoff">
                     <h4 class="event-title">Space-Time Tradeoff</h4>
                     <div class="description">The space-time tradeoff is another concept frequently glossed over or taken for granted.</div>
                   </a>
@@ -144,27 +144,27 @@
             <div class="panel-recent-events">
               <div class="events">
                 <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/impact_of_attention" target="_blank">
+                  <a target="_blank" href="https://paul-tqh-nguyen.github.io/impact_of_attention/">
                     <h4 class="event-title">The Impact of Attention</h4>
                     <div class="description">A demonstration with empirical evidence of how attention can improve the performance of an LSTM text classifier.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="http://www.connellybarnes.com/work/project_pages/image_perforation/" target="_blank">
+                  <a target="_blank" href="http://www.connellybarnes.com/work/project_pages/image_perforation/">
                     <h4 class="event-title">Image Perforation</h4>
                     <div class="description">Image Perforation is an optimization technique for automatically exploring the space of performance-accuracy trade-offs in an image processing pipeline.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/reuters_topic_labelling" target="_blank">
+                  <a target="_blank" href="https://paul-tqh-nguyen.github.io/reuters_topic_labelling/">
                     <h4 class="event-title">Multi-Label Topic Classification on Reuters Newswire Articles</h4>
                     <div class="description">A demonstration of how RNN-based architectures can perform extremely poorly on an NLP task compared to convolutional neural networks or dense MLPs.</div>
                   </a>
                 </div>
                 <div class="event-item undefined">
-                  <a href="https://github.com/paul-tqh-nguyen/joel_spolsky_text_generator" target="_blank">
-                    <h4 class="event-title">Joel Spolsky Text Generator</h4>
-                    <div class="description">A Joel Spolsky blog text generator implemented via a character-level RNN.</div>
+                  <a target="_blank" href="https://paul-tqh-nguyen.github.io/google_reviews_transformers_comparison/">
+                    <h4 class="event-title">Pretrained Transformers Comparison</h4>
+                    <div class="description">A comparison of 15 pretrained transformers models (e.g. BERT) on the task of sentiment analysis for Google Play app reviews.</div>
                   </a>
                 </div>
               </div>
@@ -175,10 +175,10 @@
     </section>
     <footer id="footer">
       <div class="footer-menu-widget row-1">
-	<a href="https://www.linkedin.com/in/paul-tqh-nguyen/">LINKEDIN</a>
-	<a href="https://github.com/paul-tqh-nguyen/">GITHUB</a>
-	<a href="paul.tqh.nguyen@gmail.com">EMAIL</a>
-	<a href="https://paul-tqh-nguyen.github.io/about/">WEBSITE</a>
+	<a target="_blank" href="https://www.linkedin.com/in/paul-tqh-nguyen/">LINKEDIN</a>
+	<a target="_blank" href="https://github.com/paul-tqh-nguyen/">GITHUB</a>
+	<a target="_blank" href="mailto:paul.tqh.nguyen@gmail.com">EMAIL</a>
+	<a target="_blank" href="https://paul-tqh-nguyen.github.io/about/">HOMEPAGE</a>
       </div>
     </footer>
   </body>
